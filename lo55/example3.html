@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <!--
+    Filename: example3.html
+    Author:   Michael Grzesina (grzesinam)
+    Date:     Winter 2023
+    Purpose:  Demonstrate manipulating forms (Learning Step 5.4) - example 3
+    -->
+    <title>Example 3 - Manipulating Forms</title>
+    <link rel="stylesheet" href="styles/example-styles.css" />
+</head>
+<body>
+<h1>Manipulating Forms - Example 3</h1>
+<h2>Capitalizing and Restructuring Text</h2>
+<p class="instructions">Make it so that the postal code can be entered with or without a space or dash, and that the
+    postal code is automatically in uppercase, both when typed and when submitted, and that the submitted postal code
+    has no space or dash.</p>
+<form action="example3solution.html" method="get">
+    <p>
+        <label for="txtPostalCode">Postal code</label>
+        <input type="text" id="txtPostalCode" name="postalCodeData" maxlength="7" size="7" />
+    </p>
+    <p>
+        <button>Next ></button>
+    </p>
+</form>
+</body>
+</html>

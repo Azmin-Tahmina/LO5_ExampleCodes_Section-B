@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <!--
+    Filename: example6solution.html
+    Author:   Michael Grzesina (grzesinam)
+    Date:     Winter 2023
+    Purpose:  Demonstrate manipulating forms (Learning Step 5.4) - example 6
+    -->
+    <title>Example 6 - Manipulating Forms</title>
+    <link rel="stylesheet" href="styles/example-styles.css" />
+</head>
+<body>
+<h1>Manipulating Forms - Example 6</h1>
+<h2>Implementing "Other" Radio Button</h2>
+<p class="instructions">Force the user to choose at least one radio button; otherwise, disable the submit button.
+    If the user selects the "Prefer to self-describe" radio button, display a text box and force the user to type an
+    answer in the checkbox before submitting. If any other radio button is selected, hide the text box and ensure that
+    it has no value.</p>
+<form action="example7.html" method="get">
+    <p>Gender</p>
+    <p>
+        <input type="radio" name="genderValue" id="optMale" value="m" />
+        <label for="optMale">Male</label>
+    </p>
+    <p>
+        <input type="radio" name="genderValue" id="optFemale" value="f" />
+        <label for="optFemale">Female</label>
+    </p>
+    <p>
+        <input type="radio" name="genderValue" id="optNonBinary" value="b" />
+        <label for="optNonBinary">Non-binary</label>
+    </p>
+    <p>
+        <input type="radio" name="genderValue" id="optNoAnswer" value="n" />
+        <label for="optNoAnswer">Prefer not to answer</label><br />
+    </p>
+    <p>
+        <input type="radio" name="genderValue" id="optDescribe" value="d" />
+        <label for="optDescribe">Prefer to self-describe</label>
+        <input type="hidden" id="txtGenderDescription" name="genderDescriptionValue" value="" />
+        <!-- text box for description is hidden to begin with -->
+    </p>
+    <p>
+        <button disabled>Next ></button>
+    </p>
+</form>
+<script>
+    "use strict";
+
+    const options = document.querySelectorAll("input[type='radio']");
+    const submitButton = document.querySelector("button");
+
+    /* If optDescribe is chosen, display text box and disable submit until text is entered */
+    document.getElementById("optDescribe").onclick = function() {
+        document.getElementById("txtGenderDescription").type = "text";
+        submitButton.disabled = true;
+    };
+
+    /* When text box has a non-blank entry, enable submit button */
+    document.getElementById("txtGenderDescription").oninput = function() {
+        submitButton.disabled = this.value.trim().length === 0;
+    }
+
+    /* If any other radio button is chosen, hide text box and remove entry; enable submit button */
+    for (let i = 0; i < options.length - 1; i++) {
+        options[i].onclick = function() {
+            document.getElementById("txtGenderDescription").type = "hidden";
+            document.getElementById("txtGenderDescription").value = "";
+            submitButton.disabled = false;
+        };
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <!--
+    Filename: example4.html
+    Author:   Michael Grzesina (grzesinam)
+    Date:     Winter 2023
+    Purpose:  Demonstrate manipulating forms (Learning Step 5.4) - example 4
+    -->
+    <title>Example 4 - Manipulating Forms</title>
+    <link rel="stylesheet" href="styles/example-styles.css" />
+</head>
+<body>
+<h1>Manipulating Forms - Example 4</h1>
+<h2>Restructuring Text - More Complicated</h2>
+<p class="instructions">Make it so that the credit card number will have any spaces or dashes removed before
+    it is submitted.</p>
+<form action="example4solution.html" method="get">
+    <p>
+        <label for="txtCreditCard">Credit card number</label>
+        <input type="text" id="txtCreditCard" name="creditCardData"
+               pattern="[0-9\- ]{16,}" />
+        <!-- pattern ensures that only digits, dashes, or spaces can be entered -->
+        <!-- could be fancier to ensure digits at the start and end -->
+        <!-- {16,} means at least 16 characters -->
+    </p>
+    <p>
+        <button>Next ></button>
+    </p>
+</form>
+</body>
+</html>

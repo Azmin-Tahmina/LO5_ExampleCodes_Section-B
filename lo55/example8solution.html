@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <!--
+    Filename: example8solution.html
+    Author:   Michael Grzesina (grzesinam)
+    Date:     Winter 2023
+    Purpose:  Demonstrate manipulating forms (Learning Step 5.4) - example 8
+    -->
+    <title>Example 8 - Manipulating Forms</title>
+    <link rel="stylesheet" href="styles/example-styles.css" />
+</head>
+<body>
+<h1>Manipulating Forms - Example 8</h1>
+<h2>Populate Select Boxes</h2>
+<p class="instructions">For the first select box below, add only the months that are left in the year (including the
+    current month). For the second select box below, delete only the months that have passed. For the third select box
+    below, when it changes, repopulate the fourth select box with the appropriate choices in alphabetical order.</p>
+<form action="done.html" method="get">
+    <p>Month selection 1:</p>
+    <p>
+        <label for="selMonth1">Month:</label>
+        <select id="selMonth1" name="selMonth1">
+        </select>
+    </p>
+
+    <p>Month selection 2:</p>
+    <p>
+        <label for="selMonth2">Month:</label>
+        <select id="selMonth2" name="selMonth2">
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+        </select>
+    </p>
+
+    <p>Country and Area Selection</p>
+    <p>
+        <label for="selCountry">Country:</label>
+        <select id="selCountry" name="selCountry">
+            <option value="ca">Canada</option>
+            <option value="us">United States</option>
+        </select>
+    </p>
+
+    <p>
+        <label for="selArea">Area:</label>
+        <select id="selArea" name="selArea" required>
+            <option value="">--Select one--</option>
+        </select>
+    </p>
+
+    <p>
+        <button>Next ></button>
+    </p>
+</form>
+<script>
+    "use strict";
+
+    const months = [ "January", "February", "March", "April", "May", "June",
+                     "July", "August", "September", "October", "November", "December" ];
+
+    const caAreas = [
+        { abbreviation: "SK", fullName: "Saskatchewan" },
+        { abbreviation: "AB", fullName: "Alberta" },
+        { abbreviation: "MB", fullName: "Manitoba" },
+        { abbreviation: "BC", fullName: "British Columbia" }
+    ]; // could add more, but this is enough
+    const usAreas = [
+        { abbreviation: "ND", fullName: "North Dakota" },
+        { abbreviation: "SD", fullName: "South Dakota" },
+        { abbreviation: "MT", fullName: "Montana" }
+    ]; // could add more, but this is enough
+
+
+    // Populate the month boxes correctly
+    populateMonth1();
+    populateMonth2();
+
+    // Start by populating the selArea box with the Canadian areas upon page load
+    // Then repopulate the selArea box when selCountry changes
+    // Then sort caAreas and usAreas by fullName (tricky! look up the sort function)
+    caAreas.sort(nameSortFunction);
+    usAreas.sort(nameSortFunction);
+    populateAreas("ca");
+
+
+    /**
+     * Changes areas based on country chosen in selCountry
+     */
+    document.getElementById("selCountry").addEventListener("input", function() {
+        const selCountry = document.getElementById("selCountry");
+        const chosenCountry = selCountry.options[selCountry.selectedIndex].value;
+        populateAreas(chosenCountry);
+    });
+
+
+    /**
+     * Add the months from the current month to December to selMonth1
+     */
+    function populateMonth1() {
+        const today = new Date();
+        const currMonth = today.getMonth();
+        const selMonth1 = document.getElementById("selMonth1");
+        for (let i = currMonth; i < 12; i++) {
+            selMonth1.insertAdjacentHTML("beforeend", `<option value="${(i + 1)}">${months[i]}</option>`);
+        }
+    }
+
+
+    /**
+     * Delete the months from January to the month before the current month in selMonth2
+     */
+    function populateMonth2() {
+        const today = new Date();
+        const currMonth = today.getMonth();
+        const selMonth1 = document.getElementById("selMonth2");
+
+        for (let i = 0; i < currMonth; i++) {
+            selMonth1.removeChild(selMonth1.options[0]); // always remove options[0] since that will change each time
+        }
+    }
+
+
+    /**
+     * Sorts by fullName attribute in all uppercase
+     * @param firstName     first name to be sorted
+     * @param secondName    second name to be sorted
+     */
+    function nameSortFunction(firstName, secondName) {
+        return (firstName.fullName.toUpperCase() > secondName.fullName.toUpperCase() ? 1 : -1);
+    }
+
+
+    /**
+     * Add the appropriate areas to selArea based on the country passed in
+     * @param country Country whose areas are to be added (currently restricted to "ca" or "us")
+     */
+    function populateAreas(country) {
+        const selArea = document.getElementById("selArea");
+        let myArray = caAreas;
+
+        if (country === "us") {
+            myArray = usAreas;
+        }
+
+        selArea.innerHTML = `<option value="">--Select one--</option>`;
+        for (let i = 0; i < myArray.length; i++) {
+            selArea.innerHTML += `<option value="${myArray[i].abbreviation}">${myArray[i].fullName}</option>`;
+        }
+    }
+</script>
+</body>
+</html>

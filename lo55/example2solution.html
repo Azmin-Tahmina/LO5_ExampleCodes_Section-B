@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <!--
+    Filename: example2solution.html
+    Author:   Michael Grzesina (grzesinam)
+    Date:     Winter 2023
+    Purpose:  Demonstrate manipulating forms (Learning Step 5.4) - example 2
+    -->
+    <title>Example 2 - Manipulating Forms</title>
+    <link rel="stylesheet" href="styles/example-styles.css" />
+</head>
+<body>
+<h1>Manipulating Forms - Example 2</h1>
+<h2>Automatically Moving Between Fields</h2>
+<p class="instructions">Make the cursor automatically move from the first field to the second field when
+    the first field is full.</p>
+<form action="example3.html" method="get">
+    <p>
+        <!-- could use jQuery validation or pattern attribute to force entry of digits -->
+        <label for="txtPhone1">Area code</label>
+        <input type="text" id="txtPhone1" name="areaCodeData" maxlength="3" size="3" />
+        <label><input type="text" id="txtPhone2" name="phoneNumberData" maxlength="8" size="8" /></label>
+    </p>
+    <p>
+        <button>Next ></button>
+    </p>
+</form>
+<script>
+    "use strict";
+
+    document.getElementById("txtPhone1").addEventListener("input", function() {
+        if (this.value.length >= this.maxLength) {
+            document.getElementById("txtPhone2").focus();
+        }
+    });
+</script>
+</body>
+</html>

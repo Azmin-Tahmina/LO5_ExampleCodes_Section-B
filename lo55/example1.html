@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <!--
+    Filename: example1.html
+    Author:   Michael Grzesina (grzesinam)
+    Date:     Winter 2023
+    Purpose:  Demonstrate manipulating forms (Learning Step 5.4) - example 1
+    -->
+    <title>Example 1 - Manipulating Forms</title>
+    <link rel="stylesheet" href="styles/example-styles.css" />
+</head>
+<body>
+<h1>Manipulating Forms - Example 1</h1>
+<h2>Counting Characters</h2>
+<p class="instructions">Update the counter of the number of characters in the comments box.</p>
+<form action="example1solution.html" method="get">
+    <p>
+        <label for="txtComments">Comments (maximum 50 characters)</label><br/>
+        <textarea id="txtComments" name="commentsData" rows="5" cols="80" maxlength="50"></textarea>
+    </p>
+    <p>Number of characters entered: <strong>0</strong> / 50</p>
+    <p>
+        <button>Next ></button>
+    </p>
+</form>
+</body>
+</html>

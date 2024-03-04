@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <!--
+    Filename: example3solution.html
+    Author:   Michael Grzesina (grzesinam)
+    Date:     Winter 2023
+    Purpose:  Demonstrate manipulating forms (Learning Step 5.4) - example 3
+    -->
+    <title>Example 3 - Manipulating Forms</title>
+    <link rel="stylesheet" href="styles/example-styles.css" />
+    <style>
+        /* Note that no JavaScript is necessary to make the entry appear in uppercase to the user, just this CSS */
+        #txtPostalCode {
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+<h1>Manipulating Forms - Example 3</h1>
+<h2>Capitalizing and Restructuring Text</h2>
+<p class="instructions">Make it so that the postal code can be entered with or without a space or dash, and that the
+    postal code is automatically in uppercase, both when typed and when submitted, and that the submitted postal code
+    has no space or dash.</p>
+<form action="example4.html" method="get">
+    <p>
+        <label for="txtPostalCode">Postal code</label>
+        <input type="text" id="txtPostalCode" name="postalCodeData" maxlength="7" size="7"
+               pattern="[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d" />
+        <!-- Note that no JavaScript is necessary to match the format, just the pattern attribute -->
+    </p>
+    <p>
+        <button>Next ></button>
+    </p>
+</form>
+<script>
+    "use strict";
+
+    document.querySelector("form").addEventListener("submit", function() {
+        let postalCodeField = document.getElementById("txtPostalCode");
+        let postalCodeValue = postalCodeField.value;
+
+        /* Remove space or dash - must be at index 3 because of pattern attribute */
+        if (postalCodeValue.charAt(3) === " " || postalCodeValue.charAt(3) === "-") {
+            postalCodeValue = postalCodeValue.slice(0, 3) + postalCodeValue.slice(4);
+        }
+
+        /* Make the submitted value in uppercase */
+        postalCodeField.value = postalCodeValue.toUpperCase();
+
+        /* No "return false;" or "event.preventDefault();" since we want the form to advance at this point */
+    });
+</script>
+</body>
+</html>

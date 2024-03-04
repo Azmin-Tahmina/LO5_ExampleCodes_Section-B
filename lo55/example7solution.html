@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <!--
+    Filename: example7.html
+    Author:   Michael Grzesina (grzesinam)
+    Date:     Winter 2023
+    Purpose:  Demonstrate manipulating forms (Learning Step 5.4) - example 7
+    -->
+    <title>Example 7 - Manipulating Forms</title>
+    <link rel="stylesheet" href="styles/example-styles.css" />
+</head>
+<body>
+<h1>Manipulating Forms - Example 7</h1>
+<h2>Show Password and Restrict Submit Button</h2>
+<p class="instructions">If the user clicks Show, show the password that the user is typing or has typed. Only enable
+    the submit button if the user has typed at least 8 characters in the password box and at least 1 character in the
+    username box.</p>
+<form action="example8.html" method="get">
+    <p>Login information</p>
+    <p>
+        <label for="txtUsername">Username:</label>
+        <input id="txtUsername" type="text" name="usernameValue" />
+    </p>
+
+    <p>
+        <label for="txtPassword">Password:</label>
+        <input id="txtPassword" type="password" minlength="8" name="passwordValue" />
+        <span id="showPassword">Show</span>
+    </p>
+
+    <p>
+        <button disabled>Next ></button>
+    </p>
+</form>
+<script>
+    "use strict";
+
+    let passwordLongEnough = false;
+    let usernameLongEnough = false;
+
+    document.getElementById("showPassword").onclick = function() {
+        let contents = this.innerHTML;
+        if (contents === "Show") {
+            this.innerHTML = "Hide";
+            document.getElementById("txtPassword").type = "text";
+        } else {
+            this.innerHTML = "Show";
+            document.getElementById("txtPassword").type = "password";
+        }
+    }
+
+    document.getElementById("txtPassword").oninput = function() {
+        if (this.value.length >= 8) {
+            passwordLongEnough = true;
+            checkIfSubmitAllowed();
+        } else {
+            passwordLongEnough = false;
+            checkIfSubmitAllowed();
+        }
+    }
+
+    document.getElementById("txtUsername").oninput = function() {
+        if (this.value.trim().length >= 1) {
+            usernameLongEnough = true;
+            checkIfSubmitAllowed();
+        } else {
+            usernameLongEnough = false;
+            checkIfSubmitAllowed();
+        }
+    }
+
+
+    /**
+     * Checks if both password and username have a valid entry and enables submit button only if both are valid
+     */
+    function checkIfSubmitAllowed() {
+        document.querySelector("button").disabled = !(passwordLongEnough && usernameLongEnough);
+    }
+</script>
+</body>
+</html>

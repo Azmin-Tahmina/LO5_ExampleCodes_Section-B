@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <!--
+    Filename: example5solution.html
+    Author:   Michael Grzesina (grzesinam)
+    Date:     Winter 2023
+    Purpose:  Demonstrate manipulating forms (Learning Step 5.4) - example 5
+    -->
+    <title>Example 5 - Manipulating Forms</title>
+    <link rel="stylesheet" href="styles/example-styles.css" />
+</head>
+<body>
+<h1>Manipulating Forms - Example 5</h1>
+<h2>Implementing "None of the above" Checkbox</h2>
+<p class="instructions">Force the user to choose at least one checkbox; otherwise, disable the button. If the user
+    selects the "None of the above" checkbox, deselect any other checkbox. If any other checkbox is selected,
+    deselect "None of the above".</p>
+<form action="example6.html" method="get">
+    <p>I want to buy</p>
+    <p>
+        <input type="checkbox" id="chkShoes" name="valueShoes" value="y" />
+        <label for="chkShoes">Shoes</label>
+    </p>
+    <p>
+        <input type="checkbox" id="chkSocks" name="valueSocks" value="y" />
+        <label for="chkSocks">Socks</label>
+    </p>
+    <p>
+        <input type="checkbox" id="chkPants" name="valuePants" value="y" />
+        <label for="chkPants">Pants</label>
+    </p>
+    <p>
+        <input type="checkbox" id="chkShirt" name="valueShirt" value="y" />
+        <label for="chkShirt">Shirt</label>
+    </p>
+    <p>
+        <input type="checkbox" id="chkNone" name="valueNone" value="y" />
+        <label for="chkNone">None of the above</label>
+    </p>
+    <p>
+        <button disabled>Next ></button>
+    </p>
+</form>
+<script>
+    "use strict";
+
+    const checkboxes = document.querySelectorAll("input[type='checkbox']");
+
+    document.getElementById("chkNone").onclick = function() {
+        for (let i = 0; i < checkboxes.length - 1; i++) {
+            checkboxes[i].checked = false;
+        }
+        checkIfSubmitAllowed();
+    };
+
+    for (let i = 0; i < checkboxes.length - 1; i++) {
+        checkboxes[i].onclick = function() {
+            document.getElementById("chkNone").checked = false;
+            checkIfSubmitAllowed();
+        };
+    }
+
+
+    /**
+     * Determines if at least one checkbox is selected. If so, enables button; otherwise, disables button.
+     */
+    function checkIfSubmitAllowed() {
+        let checkboxSelected = false;
+        for (const eachCheckbox of document.querySelectorAll("input[type='checkbox']"))
+        {
+            if (eachCheckbox.checked) {
+                checkboxSelected = true;
+            }
+        }
+        document.querySelector("button").disabled = !checkboxSelected;
+    }
+</script>
+</body>
+</html>

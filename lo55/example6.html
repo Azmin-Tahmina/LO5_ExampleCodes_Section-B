@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <!--
+    Filename: example6.html
+    Author:   Michael Grzesina (grzesinam)
+    Date:     Winter 2023
+    Purpose:  Demonstrate manipulating forms (Learning Step 5.4) - example 6
+    -->
+    <title>Example 6 - Manipulating Forms</title>
+    <link rel="stylesheet" href="styles/example-styles.css" />
+</head>
+<body>
+<h1>Manipulating Forms - Example 6</h1>
+<h2>Implementing "Other" Radio Button</h2>
+<p class="instructions">Force the user to choose at least one radio button; otherwise, disable the submit button.
+    If the user selects the "Prefer to self-describe" radio button, display a text box and force the user to type an
+    answer in the checkbox before submitting. If any other radio button is selected, hide the text box and ensure that
+    it has no value.</p>
+<form action="example6solution.html" method="get">
+    <p>Gender</p>
+    <p>
+        <input type="radio" name="genderValue" id="optMale" value="m" />
+        <label for="optMale">Male</label>
+    </p>
+    <p>
+        <input type="radio" name="genderValue" id="optFemale" value="f" />
+        <label for="optFemale">Female</label>
+    </p>
+    <p>
+        <input type="radio" name="genderValue" id="optNonBinary" value="b" />
+        <label for="optNonBinary">Non-binary</label>
+    </p>
+    <p>
+        <input type="radio" name="genderValue" id="optNoAnswer" value="n" />
+        <label for="optNoAnswer">Prefer not to answer</label><br />
+    </p>
+    <p>
+        <input type="radio" name="genderValue" id="optDescribe" value="d" />
+        <label for="optDescribe">Prefer to self-describe</label>
+    </p>
+    <p>
+        <button>Next ></button>
+    </p>
+</form>
+</body>
+</html>
