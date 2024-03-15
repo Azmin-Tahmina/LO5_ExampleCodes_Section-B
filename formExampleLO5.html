@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Purchase Form</title>
+    <script src="scripts/jquery-3.4.1.min.js"></script>
+    <script src="scripts/jquery.validate.min.js"></script>
+    <script src="scripts/additional-methods.min.js"></script>
+    <script src="scripts/formExampleLO5_final.js"></script>
+    <link rel="stylesheet" href="styles/form.css"/>
+    <link rel="stylesheet" href="styles/jform.css"/>
+
+</head>
+<body>
+  <form name="carPurchaseForm" id="carPurchaseFormID" action="#" method="post">
+      <fieldset>
+          <legend>Car Ordering Form</legend>
+          <label class="leftcol" for="nameInputID">Customer Name: </label>
+          <input class="rightcol" type="text" name="nameInput" id="nameInputID" placeholder="Type your name"/>
+          <br>
+          <label class="leftcol" for="emailInputID">Customer Email: </label>
+          <input class="rightcol" type="email" name="emailInput" id="emailInputID" placeholder="Type your Email"/>
+          <br>
+          <label class="leftcol" for="customerIDInputID">Customer ID: </label>
+          <input class="rightcol" type="text" name="customerIDInput" id="customerIDInputID" placeholder="CUST####" />
+          <br>
+          <label class="leftcol" for="ageInputID" required>Age: </label>
+          <input class="rightcol" type="number" class="digits" name="ageInput" id="ageInputID" placeholder="Type your Age" value="18"/>
+<!--          onchange="checkAge();"-->
+          <br>
+          <label class="leftcol" for="companyInputID">Type: </label>
+          <select class="rightcol" name="companyInput" id="companyInputID">
+              <option value="" selected>Select</option>
+              <option value="Toyota">Toyota</option>
+              <option value="Honda">Honda</option>
+              <option value="Audi">Audi</option>
+              <option value="Acura">Acura</option>
+              <option value="BMW">BMW</option>
+          </select>
+
+          <br>
+          <label class="leftcol" for="carModelInputID" id="carModelInputIDLabel">Available Models: </label>
+          <select class="rightcol" name="carModelInput" id="carModelInputID">
+              <option value="" selected>Select</option>
+
+          </select>
+
+          <br>
+          <label class="leftcol" for="priceInputID">Price: </label>
+          <input class="rightcol" type="text" name="priceInput" id="priceInputID" placeholder="Price will be placed based on Car selection" disabled/>
+          <br>
+
+          <span class="leftcol">Colour:</span>
+          <span class="rightcol ">
+              <label for="colourRedID">Red</label>
+              <input type="radio" id="colourRedID" name="colourInput" value="R" />
+              <br>
+              <label for="colourGreenID">Green</label>
+              <input type="radio" id="colourGreenID" name="colourInput" value="G" checked="checked"  />
+              <br>
+               <label for="colourBlueID">Blue</label>
+              <input type="radio" id="colourBlueID" name="colourInput" value="B" />
+          </span>
+          <label class="leftcol" for="priceNegotiatedID">Agreed with all terms and conditions?</label>
+          <input class="rightcol" type="checkbox" id="priceNegotiatedID" name="priceNegotiatedInput" value="yes" />
+          <br>
+          <span class="buttons">
+            <input type="submit" value="Place Order" />
+            <input type="reset" value="Reset Form" />
+          </span>
+      </fieldset>
+
+  </form>
+  <div id="showInformation" >
+<!--      I have placed a table, but you can use list if you want-->
+<!--      for sorting the list, in ascending order alphabetically, you can take help from the last example of learning outcome 4-->
+      <table id="showInformationTable">
+          <thead>
+            <tr>
+                <th>Customer name</th>
+                <th>Customer ID</th>
+                <th>Customer Email</th>
+                <th>Customer Age</th>
+                <th>Car Company</th>
+                <th>Car Model</th>
+                <th>Car Price</th>
+                <th>Total Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+          <tfoot>
+          </tfoot>
+      </table>
+  </div>
+</body>
+
+<!--      URL(get) -> lo5/formSubmissionLO5.html?nameInput=testName&ageInput=5-->
+<!--request Payload (post) -> nameInput=default+name&ageInput=0-->
+<!--key: name of input element-->
+<!--value:  value of input  element-->
+<!--example:-->
+<!--nameInput: testName-->
+<!--ageInput: 5-->
+</html>
+

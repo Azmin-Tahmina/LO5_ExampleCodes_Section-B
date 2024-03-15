@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Simple Form</title>
+    <link rel="stylesheet" href="styles/form-start.css" />
+</head>
+<body>
+<form name="simpleForm" id="simpleFormID"
+      action="aformprocessor.html" method="get">
+    <fieldset>
+        <legend>T-shirt ordering form</legend>
+
+        <label class="leftcol" for="name">Name on back:</label>
+        <input class="rightcol" type="text" id="name" name="name" maxlength="20" />
+
+        <label class="leftcol" for="size">Size:</label>
+        <select class="rightcol" id="size" name="size">
+            <option value="">
+                --Please select a size--
+            </option>
+            <option value="S">Small</option>
+            <option value="M">Medium</option>
+            <option value="L">Large</option>
+        </select>
+        <span class="leftcol">Colour:</span>
+
+        <span class="rightcol">
+                    <input type="radio" id="colourRed" name="colour" value="R" checked="checked" />
+                    <label for="colourRed">Red</label>
+                    <input type="radio" id="colourGreen" name="colour" value="G" />
+                    <label for="colourGreen">Green</label>
+                    <input type="radio" id="colourBlue" name="colour" value="B" />
+                    <label for="colourBlue">Blue</label>
+                </span>
+        <span class="leftcol rightalign">
+                    <input type="checkbox" id="forChild" name="forChild" value="yes" />
+                </span>
+        <label class="rightcol" for="forChild">Check if this is for a child</label>
+
+        <span class="buttons">
+                    <input type="submit" value="Place Order" />
+                    <input type="reset" value="Reset Form" />
+                </span>
+    </fieldset>
+</form>
+</body>
+<script>
+    "use strict"
+
+    window.onload = init;
+
+    function init()
+    {
+        document.getElementById("simpleFormID").onsubmit = handleFormSubmission;
+    }
+
+    function handleFormSubmission(event){
+        alert("Form submission activated!");
+        let elements = document.getElementById("simpleFormID").elements;
+        let outputString = "";
+        // let length = elements.length;
+        // for(let i=0;i<length;i++)
+        // {
+        //     outputString += "Element "+ i+"-Name: "+ elements[i].name;
+        //     outputString += ", Type: " + elements[i].type;
+        //     outputString += ", Value: " + elements[i].value;
+        //     outputString += "\n";
+        // }
+
+        let currentElement = null;
+        let selectedOption;
+
+        currentElement = document.getElementById("name");
+        outputString += "Current value of the name text input: " + currentElement.value + "\n";
+        outputString += "Default value of the name text input: " + currentElement.defaultValue + "\n";
+
+        currentElement = document.getElementById("size");
+        outputString += "Current value of the name text input: " + currentElement.value + "\n";
+
+
+
+        alert(outputString);
+        console.log(outputString);
+        event.preventDefault();
+
+
+    }
+</script>
+</html>
