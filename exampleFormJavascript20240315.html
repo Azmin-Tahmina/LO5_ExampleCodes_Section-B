@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Simple Form</title>
+    <link rel="stylesheet" href="styles/form-start.css" />
+<!--    For external Javascript use defer example-->
+<!--    <script src="scripts/simpleform.js" defer></script>-->
+</head>
+<body>
+<form name="simpleForm" id="simpleFormID"
+      action="aformprocessor.html" method="get">
+    <fieldset>
+        <legend>T-shirt ordering form</legend>
+
+        <label class="leftcol" for="nameID">Name on back:</label>
+<!--        key vaue pair-->
+<!--        http://localhost:63342/lo5/aformprocessor.html?name=&size=S&colour=R-->
+<!--        key->value pair for checkbox will not appear, if you do not check it-->
+<!--        key will be the name of the input element-->
+<!--        value will come from value attribute, even it is not present-->
+<!--        key -> name-->
+<!--        value -> ""-->
+<!--        key-> size-->
+<!--        value -> S-->
+<!--        key-> colour-->
+<!--        value-> R-->
+<!--        value="Default Name"-->
+<!--            pattern="take regular expression"-->
+        <input class="rightcol" type="text" id="nameID" name="name" minlength="2" maxlength="20"
+               placeholder="Type your name"/>
+        <span class="errorMessage" id="error"></span>
+
+        <label class="leftcol" for="sizeID">Size:</label>
+<!--        <select class="rightcol" id="sizeID" name="size" multiple>-->
+        <select class="rightcol" id="sizeID" name="size">
+            <option value="">
+                --Please select a size--
+            </option>
+            <option value="S" >Small</option>
+            <option value="M" selected>Medium</option>
+            <option value="L">Large</option>
+        </select>
+        <span class="leftcol">Colour:</span>
+
+        <span class="rightcol">
+                    <input type="radio" id="colourRed" name="colour" value="R" checked="checked" />
+                    <label for="colourRed">Red</label>
+                    <input type="radio" id="colourGreen" name="colour" value="G" />
+                    <label for="colourGreen">Green</label>
+                    <input type="radio" id="colourBlue" name="colour" value="B" />
+                    <label for="colourBlue">Blue</label>
+                </span>
+
+<!--        http://localhost:63342/lo5/aformprocessor.html?name=&size=S&colour=R&forChild=yes-->
+<!--        key->value pair for checkbox will not appear, if you do not check it-->
+        <span class="leftcol rightalign">
+                    <input type="checkbox" id="forChildID" name="forChild" value="yes" />
+                </span>
+        <label class="rightcol" for="forChildID">Check if this is for a child</label>
+
+        <span class="buttons">
+                    <input type="submit" value="Submit" />
+                    <input type="reset" value="Reset" />
+                </span>
+    </fieldset>
+</form>
+</body>
+<script>
+    "use strict"
+
+    window.onload = init;
+
+    function init()
+    {
+        // onchange, onblur,onfocus,oninput should be called in here
+        document.getElementById("simpleFormID").onsubmit = handleFormSubmission;
+        //document.getElementById("nameID").oninput = nameValidation;
+        document.getElementById("nameID").oninput = updatedNameValidation;
+
+    }
+
+    function handleFormSubmission(event){
+        alert("Form submission activated!");
+        let elements = document.getElementById("simpleFormID").elements; // elements array, object type array
+        //console.log(elements);
+        //alert(elements.length);
+        let outputString = "";
+
+        // let length = elements.length;
+        // for(let i=0;i<length;i++)
+        // {
+        //     outputString += "Element Number: "+i+" Element Form : "+elements[i].form+"\n";
+        //     outputString += "Element Number: "+i+" Element name: "+elements[i].name+"\n";
+        //     outputString += "Element Number: "+i+" Element ID: "+ elements[i].id+"\n";
+        //     outputString += "Element Number: "+i+" Element type: "+ elements[i].type+"\n";
+        //     outputString +=  "Element Number: "+i+" Element value: "+ elements[i].value+"\n";
+        //     outputString += "\n";
+        // }
+
+        let currentElement = null;
+        let selectedOption;
+
+        currentElement = document.getElementById("nameID");
+        //currentElement.value = "Test Name";
+        outputString += "Current value of the name text input: " + currentElement.value + "\n";
+        outputString += "Default value of the name text input: " + currentElement.defaultValue + "\n";
+        outputString += "Default value of the name text input: " + currentElement.placeholder + "\n";
+        // Setting value from js -> check the difference by uncommenting line 103 and commenting line 99
+        //currentElement.value = "Test Name";
+        outputString += "\n";
+
+            //Example select box
+        currentElement = document.getElementById("sizeID");
+        outputString += "Number of options in the select box: "  + currentElement.length + "\n";
+        outputString += "Options in the select box: "  + currentElement.options + "\n";
+        //outputString += "Default selected option in the select box: "  + currentElement.defaultSelected + "\n"; // output is undefined
+        // We are giving the facility to select multiple options
+        // every not selected item will have selected index -1
+        selectedOption = currentElement.selectedIndex;
+        // First we will observe single select
+        console.log(selectedOption)
+        // outputs the option number
+        outputString += "Number of selected option in select box: " + selectedOption + "\n";
+        // Need to fix the selected options for multiselect
+        //selectedOption = currentElement.selectedOptions; // not working
+        if(selectedOption !== -1)
+        {
+            outputString += "Text of selected option: " + currentElement.options[selectedOption].text + "\n";
+            outputString += "Value of selected option: " + currentElement.options[selectedOption].value + "\n";
+            outputString += "Check Default selected: " + currentElement.options[selectedOption].defaultSelected + "\n";
+        }
+        else
+        {
+            outputString += "No size selected\n";
+        }
+
+        outputString += "\n";
+        // Examples for radio Button
+        outputString += "Selected colour: ";
+        currentElement = document.getElementById("colourRed");
+        outputString += "Check for radio button with ID: " + currentElement.id + "\n";
+        outputString += "Value of selected option: " + currentElement.value  + "\n";
+        outputString += "Radio button is checked or not: " + currentElement.checked + "\n";
+        outputString += "Default checked option: " + currentElement.defaultChecked + "\n";
+        outputString += "\n";
+
+        currentElement = document.getElementById("colourGreen");
+        outputString += "Check for radio button with ID: " + currentElement.id + "\n";
+        outputString += "Value of selected option: " + currentElement.value  + "\n";
+        outputString += "Radio button is checked or not: " + currentElement.checked + "\n";
+        outputString += "Default checked option: " + currentElement.defaultChecked + "\n";
+        outputString += "\n";
+
+        currentElement = document.getElementById("colourBlue");
+        outputString += "Check for radio button with ID: " + currentElement.id + "\n";
+        outputString += "Value of selected option: " + currentElement.value  + "\n";
+        outputString += "Radio button is checked or not: " + currentElement.checked + "\n";
+        outputString += "Default checked option: " + currentElement.defaultChecked + "\n";
+        outputString += "\n";
+
+        outputString += "Selected colour: ";
+        // Check for current selected one
+        if (document.getElementById("colourRed").checked) {
+            outputString += "Red";
+        } else if (document.getElementById("colourGreen").checked) {
+            outputString += "Green";
+        } else if (document.getElementById("colourBlue").checked) {
+            outputString += "Blue";
+        } else {
+            outputString += "none";
+        }
+        outputString += "\n";
+
+        // Example for Checkbox
+        outputString += "\n";
+        currentElement = document.getElementById("forChildID");
+        outputString += "Check for CheckBox with ID: " + currentElement.id + "\n";
+        outputString += "Value of CheckBox : " + currentElement.value  + "\n";
+        outputString += "CheckBox  is checked or not: " + currentElement.checked + "\n";
+        outputString += "Default checked? : " + currentElement.defaultChecked + "\n";
+        outputString += "\n";
+
+
+
+        // alert(outputString);
+        //nameValidation();
+        //updatedNameValidation()
+        console.log(outputString);
+        event.preventDefault();
+    }
+
+    function nameValidation()
+    {
+        let nameInput = document.getElementById("nameID");
+        if(nameInput.value === "")
+        {
+            alert("Name cannot be empty");
+        }
+        else{
+            alert("Good job!")
+        }
+    }
+
+
+    function updatedNameValidation()
+    {
+        let nameInput = document.getElementById("nameID");
+        let errorSpan = document.getElementById("error");
+        if(nameInput.value.trim() === "")
+        {
+            errorSpan.textContent ="Name field must not be blank";
+            nameInput.style.backgroundColor = "pink";
+            //alert("Name cannot be empty");
+        }
+        else{
+            errorSpan.textContent ="";
+            nameInput.style.backgroundColor = "green";
+        }
+    }
+</script>
+</html>

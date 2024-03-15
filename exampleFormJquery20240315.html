@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="styles/jform.css" />
     <script src="scripts/jquery-3.4.1.min.js"></script>
     <script src="scripts/jquery.validate.min.js"></script>
-    <script src="scripts/additional-methods.min.js"></script>
-    <link rel="stylesheet" href="styles/form.css"/>
+    <!--<script src="scripts/additional-methods.min.js"></script>-->
+    <script src="scripts/pattern.js"></script>
 </head>
 
 <body>
@@ -16,34 +16,37 @@
         <legend>CST Information Form</legend>
 
         <p>
-            <label for="name">Name</label>
+            <label for="nameID">Name</label>
             <em>*</em>
-            <input id="name" name="name" type="text" size="30" maxlength="30" required/>
+            <input id="nameID" name="name" type="text" size="30"/>
+<!--            maxlength="30" required-->
         </p>
 
         <p>
-            <label for="cstID">CST ID</label>
+            <label for="cstIDID">CST ID</label>
             <em>*</em>
-            <input id="cstID" name="cstID" type="text" size="6" maxlength="6"  />
-            <!--pattern="^[Cc][Ss][Tt]\d{3}$" -->
+            <input id="cstIDID" name="cstID" type="text"  />
+<!--            size="6" maxlength="6"  required-->
+<!--            pattern="^[Cc][Ss][Tt]\d{3}$"-->
+
         </p>
 
         <p>
             <label for="email">Email</label>
             <em>*</em>
-            <input id="email" name="email" type="text" size="30" maxlength="30" />
+            <input id="email" name="email" type="email" size="30" maxlength="30" required/>
         </p>
 
         <p>
-            <label for="age">Age</label>
+            <label for="ageID">Age</label>
             <em>*</em>
-            <input id="age" name="age" type="text" size="3" maxlength="3" />
+            <input id="ageID" name="age" class="digits" type="number" size="3" maxlength="3" />
         </p>
 
         <p>
             <label for="homepage">Homepage</label>
             <em>&nbsp;</em>
-            <input id="homepage" name="homepage" type="text" size="50" maxlength="50" />
+            <input id="homepage" name="homepage" type="url" size="50" maxlength="50" />
         </p>
 
         <p>
@@ -67,49 +70,124 @@
 </body>
 <script>
     "use strict"
-    // $(function() {
+    // Two possible ways:
+
+    // $(function (){
     //     $("#testForm").validate();
-    // } );
+    // });
 
 
     // Custom validation rules:
-    jQuery.validator.addMethod( "nameChars", nameTester,
+    jQuery.validator.addMethod("nameChars", nameTester,
         "A name can only contain letters or numbers" );
+
+
+    // function testFunction(value, elem) {
+    //     return this.optional(elem) || put your own test here;
+    // }
 
     function nameTester(value,elem)
     {
         return this.optional(elem) || /^[A-Za-z0-9]+$/.test( value );
     }
 
-    $(document).ready(function() {
+
+    // another way
+    // jQuery.validator.addMethod("nameChars", function(value, elem) {
+    //     return this.optional(elem) || /^[A-Za-z0-9]+$/.test( value );
+    // },"A name can only contain letters or numbers" );
+
+    $(document).ready(function (){
         $("#testForm").validate(
             {
+                // Use element "name" property to create rules and message. Some method names were misspelled. That's why it did not work!
                 rules:{
                     name:
-                    {
-                        required: true,
-                        minlength: 2,
-                        nameTester: true
-                    },
+                        {
+                            maxlength: 30,
+                            minlength: 2,
+                            required: true,
+                            nameChars: true
+                           // pattern: ""
+                        },
+                    cstID:
+                        {
+                            size:6,
+                            maxlength:6,
+                            required: true
+                        },
                     age:
-                    {
-                        required: true,
-                        digits: true
-                    }
+                        {
+                            required: true,
+                            digits: true
+                        }
                 },
-                messages:{
-                    name: {
-                        required: "Please enter a name"
-                    },
+                message:{
+                    name:
+                        {
+                            maxlength: "Please add 30 characters at most",
+                            minlength: "Please add 2 characters at least ",
+                            required: "The field is required"
+                        },
+                    cstID:
+                        {
+                            //size:"Size is 6", There is no method named size
+                            maxlength:"Please add 30 characters at most",
+                            required: "The field is required"
+                        },
                     age: {
-                        required: "You must specify an age",
-                        digits: "Age must be a non-negative number"
+                            required: "You must specify an age",
+                            digits: "Age must be a non-negative number"
                     }
                 }
-
             }
         );
     });
+
+
+    // $(function() {
+    //     $("#testForm").validate();
+    // } );
+
+
+    // // Custom validation rules:
+    // jQuery.validator.addMethod( "nameChars", nameTester,
+    //     "A name can only contain letters or numbers" );
+    //
+    // function nameTester(value,elem)
+    // {
+    //     return this.optional(elem) || /^[A-Za-z0-9]+$/.test( value );
+    // }
+    //
+    // $(document).ready(function() {
+    //     $("#testForm").validate(
+    //         {
+    //             rules:{
+    //                 name:
+    //                 {
+    //                     required: true,
+    //                     minlength: 2,
+    //                     nameTester: true
+    //                 },
+    //                 age:
+    //                 {
+    //                     required: true,
+    //                     digits: true
+    //                 }
+    //             },
+    //             messages:{
+    //                 name: {
+    //                     required: "Please enter a name"
+    //                 },
+    //                 age: {
+    //                     required: "You must specify an age",
+    //                     digits: "Age must be a non-negative number"
+    //                 }
+    //             }
+    //
+    //         }
+    //     );
+    // });
 
 
 
