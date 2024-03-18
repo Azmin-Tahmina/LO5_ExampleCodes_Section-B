@@ -52,13 +52,13 @@
         <p>
             <label for="new-password">Password</label>
             <em>&nbsp;</em>
-            <input id="new-password" name="new-password" type="password" minlength="8" />
+            <input id="new-password" name="newpassword" type="password" minlength="8" />
         </p>
 
         <p>
             <label for="confirm-password">Confirm</label>
             <em>&nbsp;</em>
-            <input id="confirm-password" name="confirm-password" type="password" />
+            <input id="confirm-password" name="confirmpassword" type="password" />
         </p>
 
         <p>
@@ -81,10 +81,30 @@
     jQuery.validator.addMethod("nameChars", nameTester,
         "A name can only contain letters or numbers" );
 
+    // Add a validation rule to check for a valid CST id in the format “cst###” where ### are valid digits.
+
+    jQuery.validator.addMethod("cstChars", function (value, elem) {
+        return this.options(elem) || /^[Cc][Ss][Tt]\d{3}$/.test(value);
+    }, "Must be in the form cst### where # is a digit" );
 
     // function testFunction(value, elem) {
     //     return this.optional(elem) || put your own test here;
     // }
+
+    jQuery.validator.addMethod("passwordChars", function(value, elem) {
+        let result = true;
+        if (! /[A-Z]/.test(value)) {
+            result = false;
+        }
+        if (! /[a-z]/.test(value)) {
+            result = false;
+        }
+        if (! /[0-9]/.test(value)) {
+            result = false;
+        }
+        return this.optional(elem) || result;
+    }, "Password must have at least one of lowercase, uppercase, and digits");
+
 
     function nameTester(value,elem)
     {
@@ -112,15 +132,25 @@
                         },
                     cstID:
                         {
-                            size:6,
+
                             maxlength:6,
-                            required: true
+                            required: true,
+                            cstChars: true
                         },
                     age:
                         {
                             required: true,
                             digits: true
-                        }
+                        },
+
+                    confirmpassword: {
+                        equalTo: "#new-password"
+                    },
+                    newpassword: {
+                        passwordChars: true
+                    }
+
+
                 },
                 message:{
                     name:
